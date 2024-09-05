@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSMPS</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="welcome">Login</div>
+    <div class="nav">
+        <a href="Welcome.html">Back</a>
+    </div>
+    <div class="container" style="margin-left: 100px;">
+            <label for="AdminId">Admin ID: </label>
+            <input type="text" id="AdminId" name="id" placeholder="Enter Admin Id" style="margin-left:31px;"><br>
+            <label for="password">Password :</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password"><br>
+            <button type="submit" onclick="admin()">Login</button>
+    </div>
+    <script>
+        function admin(){
+            var id = document.getElementById('AdminId').value;
+            var password = document.getElementById('password').value;
+            if(id)
+            {
+                if(password)
+                {
+                    if(id=="Admin123" && password=="Admin_12345")
+                    {
+                        window.location.href = "AdminHome.php";
+                    }
+                }
+                else    
+                    alert("Please Enter Password");
+            }
+            else    
+                alert("Please Enter Id");
+        }
+    </script>
+</body>
+</html>

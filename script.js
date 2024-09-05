@@ -1,0 +1,7 @@
+function exam(){
+    
+} 
+
+function attendance(){
+
+}

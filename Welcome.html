@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSMPS</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #aboutPopup, #contactPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 750px;
+            height: 350px;
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome">Graphic Era University</div>
+    <div class="nav">
+        <a href="#" id="Login">Login</a>
+        <div id="options">
+            <a href="StudentLogin.php">Student</a><br>
+            <a href="AdminLogin.html">Admin</a>
+        </div>
+        <a href="#" onclick="togglePopup('aboutPopup')">About</a>
+        <a href="#" onclick="togglePopup('contactPopup')">Contact Us</a>
+    </div>
+    <div id="aboutPopup" class="popup">
+        <div class="popupContent">
+            <h2>About Us</h2>
+            <p>This is the unofficial website for Graphic Era University. Developed by Sonali Singh.</p>
+            <button onclick="togglePopup('aboutPopup')" style="margin-left:0px;">Close</button>
+        </div>
+    </div>
+    <div id="contactPopup" class="popup" style="display:none;">
+        <div class="popupContent">
+            <h2>Contact Us</h2>
+            <p>You can contact us at geu@gmail.com or +91-9234567810</p>
+            <button onclick="togglePopup('contactPopup')" style="margin-left:0px;">Close</button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#Login').mouseover(function(){
+                $('#options').slideDown();
+            });
+            $('.nav').mouseleave(function(){
+                $('#options').slideUp();
+            });
+        });
+
+        function togglePopup(popupId) {
+            var popup = document.getElementById(popupId);
+            popup.style.display = (popup.style.display === "block") ? "none" : "block";
+        }
+    </script>
+</body>
+</html>

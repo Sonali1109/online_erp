@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSMPS</title>
+    <link rel="stylesheet" href="styles1.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .container1 {
+            display: flex;
+            height: 78vh;
+        }
+        .left-side {
+            width: 400px;
+            border: 1px solid black;
+            padding: 5px;
+        }
+        .left-side p {
+            margin: 25px;
+        }
+        .right-side {
+            flex: 1;
+            border: 1px solid black;
+            padding: 20px;
+        }
+        #marks {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="welcome">Update Marks</h1>
+    <div class="nav" style="display: flex;">
+        <a href="AdminHome.php">Back</a>
+    </div>
+    <div class="container1">
+        <div class="left-side">
+            <input type="text" id="id" placeholder="Enter Student Id">
+            <select name="sem" id="sem">
+                <option value="">Select</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+            <button onclick="getMarks()">Submit</button>
+        </div>
+        <div class="right-side">
+            <div id="marks">
+                <label for="sub1" id="s1"></label>
+                <input type="text" id="sub1">
+                <label for="sub2" id="s2"></label>
+                <input type="text" id="sub2"><br>
+                <label for="sub3" id="s3"></label>
+                <input type="text" id="sub3">
+                <label for="sub4" id="s4"></label>
+                <input type="text" id="sub4"><br>
+                <label for="sub5" id="s5"></label>
+                <input type="text" id="sub5">
+                <label for="sub6" id="s6"></label>
+                <input type="text" id="sub6"><br>
+                <label for="sub7" id="s7"></label>
+                <input type="text" id="sub7">
+                <label for="sub8" id="s8"></label>
+                <input type="text" id="sub8"><br>
+                <label for="sub9" id="s9"></label>
+                <input type="text" id="sub9">
+                <label for="cgpa" id="cg"></label>
+                <input type="text" id="cgpa">
+            </div>
+            <button id="submit" onclick="upload()" style="display: none;">Upload</button>
+        </div>
+
+        <script>
+            function getMarks() {
+                var id = document.getElementById('id').value;
+                var sem = document.getElementById('sem').value;
+                if (id && sem) {
+                    if (parseInt(sem) <= 8) {
+                        if(sem == 7 || sem==8)
+                            {
+                                alert("No result!");
+                            }else{
+                        $.ajax({
+                            url: 'fetch_marks.php',
+                            type: 'POST',
+                            data: { student_id: id, semester: sem },
+                            success: function(response) {
+                                if (response.error) {
+                                    alert(response.error);
+                                } else {
+                                    document.getElementById('marks').style.display = "inline-block";
+                                    document.getElementById('submit').style.display = "inline-block";
+                                    if(sem==1){
+                                        document.getElementById('s1').innerText = 'Professional Communication';
+                                        document.getElementById('sub1').value = response.ProfessionalCommunication;
+                                        document.getElementById('s2').innerText = 'Engineering Chemistry';
+                                        document.getElementById('sub2').value = response.EngineeringChemistry;
+                                        document.getElementById('s3').innerText = 'Engineering Mathematics-I';
+                                        document.getElementById('sub3').value = response.EngineeringMathematics;
+                                        document.getElementById('s4').innerText = 'Basic Electronics Engineering';
+                                        document.getElementById('sub4').value = response.BasicElectronicsEngineering;
+                                        document.getElementById('s5').innerText = 'Environmental Science';
+                                        document.getElementById('sub5').value = response.EnvironmentalScience;
+                                        document.getElementById('s6').innerText = 'Fundamental of Computer and Introduction to Programming';
+                                        document.getElementById('sub6').value = response.FundamentalofComputerandIntroductiontoProgramming;
+                                        document.getElementById('s7').innerText = 'Chemistry Lab';
+                                        document.getElementById('sub7').value = response.ChemistryLab;
+                                        document.getElementById('s8').innerText = 'Basic Electronics Engineering Lab';
+                                        document.getElementById('sub8').value = response.BasicElectronicsEngineeringLab;
+                                        document.getElementById('s9').innerText = 'Computer Lab-I';
+                                        document.getElementById('sub9').value = response.ComputerLab;
+                                        document.getElementById('cg').innerText = 'Cgpa';
+                                        document.getElementById('cgpa').value = response.Cgpa;
+                                    }
+                                    else if(sem==2){
+                                        document.getElementById('s1').innerText = 'Advanced Professional Communication';
+                                        document.getElementById('sub1').value = response.AdvancedProfessionalCommunication;
+                                        document.getElementById('s2').innerText = 'Engineering Physics';
+                                        document.getElementById('sub2').value = response.EngineeringPhysics;
+                                        document.getElementById('s3').innerText = 'Engineering Mathematics-II';
+                                        document.getElementById('sub3').value = response.EngineeringMathematics;
+                                        document.getElementById('s4').innerText = 'Basic Electrical Engineering';
+                                        document.getElementById('sub4').value = response.BasicElectricalEngineering;
+                                        document.getElementById('s5').innerText = 'Programming for Problem Solving';
+                                        document.getElementById('sub5').value = response.ProgrammingforProblemSolving;
+                                        document.getElementById('s6').innerText = 'Healthy Living and Fitness';
+                                        document.getElementById('sub6').value = response.HealthyLivingandFitness;
+                                        document.getElementById('s7').innerText = 'Physics Lab';
+                                        document.getElementById('sub7').value = response.PhysicsLab;
+                                        document.getElementById('s8').innerText = 'Basic Electrical Engineering Lab';
+                                        document.getElementById('sub8').value = response.BasicElectricalEngineeringLab;
+                                        document.getElementById('s9').innerText = 'Computer Lab-II';
+                                        document.getElementById('sub9').value = response.ComputerLab;
+                                        document.getElementById('cg').innerText = 'Cgpa';
+                                        document.getElementById('cgpa').value = response.Cgpa;
+                                    }
+                                    else if(sem==3){
+                                        document.getElementById('s1').innerText = 'Logic Design';
+                                        document.getElementById('sub1').value = response.LogicDesign;
+                                        document.getElementById('s2').innerText = 'Data Structures with C';
+                                        document.getElementById('sub2').value = response.DataStructureswithC;
+                                        document.getElementById('s3').innerText = 'Object Oriented Programming with C++';
+                                        document.getElementById('sub3').value = response.ObjectOrientedProgrammingwithCpp;
+                                        document.getElementById('s4').innerText = 'Discrete Structures and Combinatorics';
+                                        document.getElementById('sub4').value = response.DiscreteStructuresandCombinatorics;
+                                        document.getElementById('s5').innerText = 'Career Skills';
+                                        document.getElementById('sub5').value = response.CareerSkills;
+                                        document.getElementById('s6').innerText = 'Elective';
+                                        document.getElementById('sub6').value = response.Elective;
+                                        document.getElementById('s7').innerText = 'Logic Design Lab';
+                                        document.getElementById('sub7').value = response.LogicDesignLab;
+                                        document.getElementById('s8').innerText = 'Data Structures Lab';
+                                        document.getElementById('sub8').value = response.DataStructuresLab;
+                                        document.getElementById('s9').innerText = 'OOPS with C++ Lab';
+                                        document.getElementById('sub9').value = response.OOPSwithCppLab;
+                                        document.getElementById('cg').innerText = 'Cgpa';
+                                        document.getElementById('cgpa').value = response.Cgpa;
+                                    }
+                                    else if(sem==4){
+                                        document.getElementById('s1').innerText = 'Finite Automata and Formal Languages';
+                                        document.getElementById('sub1').value = response.FiniteAutomataandFormalLanguages;
+                                        document.getElementById('s2').innerText = 'Microprocessors';
+                                        document.getElementById('sub2').value = response.Microprocessors;
+                                        document.getElementById('s3').innerText = 'Java Programming Language';
+                                        document.getElementById('sub3').value = response.JavaProgrammingLanguage;
+                                        document.getElementById('s4').innerText = 'Design and Analysis of Algorithms';
+                                        document.getElementById('sub4').value = response.DesignandAnalysisofAlgorithms;
+                                        document.getElementById('s5').innerText = 'Career Skills';
+                                        document.getElementById('sub5').value = response.CareerSkills;
+                                        document.getElementById('s6').innerText = 'Elective';
+                                        document.getElementById('sub6').value = response.Elective;
+                                        document.getElementById('s7').innerText = 'Java Programming Lab';
+                                        document.getElementById('sub7').value = response.JavaProgrammingLab;
+                                        document.getElementById('s8').innerText = 'Microprocessors Lab';
+                                        document.getElementById('sub8').value = response.MicroprocessorsLab;
+                                        document.getElementById('s9').innerText = 'DAA Lab';
+                                        document.getElementById('sub9').value = response.DAALab;
+                                        document.getElementById('cg').innerText = 'Cgpa';
+                                        document.getElementById('cgpa').value = response.Cgpa;
+                                    }
+                                    else if(sem==5){
+                                        document.getElementById('s1').innerText = 'System Software';
+                                        document.getElementById('sub1').value = response.SystemSoftware;
+                                        document.getElementById('s2').innerText = 'Operating System';
+                                        document.getElementById('sub2').value = response.OperatingSystem;
+                                        document.getElementById('s3').innerText = 'Data Base Management Systems';
+                                        document.getElementById('sub3').value = response.DataBaseManagementSystems;
+                                        document.getElementById('s4').innerText = 'Computer Based Numerical and Statistical Techniques';
+                                        document.getElementById('sub4').value = response.ComputerBasedNumericalandStatisticalTechniques;
+                                        document.getElementById('s5').innerText = 'Career Skills';
+                                        document.getElementById('sub5').value = response.CareerSkills;
+                                        document.getElementById('s6').innerText = 'Elective';
+                                        document.getElementById('sub6').value = response.Elective;
+                                        document.getElementById('s7').innerText = 'Operating System Lab';
+                                        document.getElementById('sub7').value = response.OperatingSystemsLab;
+                                        document.getElementById('s8').innerText = 'DBMS Lab';
+                                        document.getElementById('sub8').value = response.DBMSLab;
+                                        document.getElementById('s9').innerText = 'CBNST Lab';
+                                        document.getElementById('sub9').value = response.CBNSTLab;
+                                        document.getElementById('cg').innerText = 'Cgpa';
+                                        document.getElementById('cgpa').value = response.Cgpa;
+                                    }
+                                    else if(sem==6){
+                                        document.getElementById('s1').innerText = 'Compiler Design TCS-601';
+                                        document.getElementById('sub1').value = response.CompilerDesign;
+                                        document.getElementById('s2').innerText = 'Software Engineering TCS-611';
+                                        document.getElementById('sub2').value = response.SoftwareEngineering;
+                                        document.getElementById('s3').innerText = 'Computer Networks TCS-604';
+                                        document.getElementById('sub3').value = response.ComputerNetworks;
+                                        document.getElementById('s4').innerText = 'Full Stack Web Development TCS-693';
+                                        document.getElementById('sub4').value = response.FullStackWebDevelopment;
+                                        document.getElementById('s5').innerText = 'Career Skills XCS-601';
+                                        document.getElementById('sub5').value = response.CareerSkills;
+                                        document.getElementById('s6').innerText = 'Elective';
+                                        document.getElementById('sub6').value = response.Elective;
+                                        document.getElementById('s7').innerText = 'Compiler Design Lab PCS-601';
+                                        document.getElementById('sub7').value = response.CompilerDesignLab;
+                                        document.getElementById('s8').innerText = 'Software Engineering Lab PCS-611';
+                                        document.getElementById('sub8').value = response.SoftwareEngineeringLab;
+                                        document.getElementById('s9').innerText = 'Full Stack Web Development Lab PCS-693';
+                                        document.getElementById('sub9').value = response.FullStackWebDevelopmentLab;
+                                        document.getElementById('cg').innerText = 'Cgpa';
+                                        document.getElementById('cgpa').value = response.Cgpa;
+                                    }
+                                    else if(sem==7){
+                                        //alert("No result!");
+                                    }
+                                    else{
+                                        // alert("No result!");
+                                    } //sem8
+                                    
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert('Error fetching data. Check console for details.');
+                                console.error('AJAX error:', textStatus, errorThrown);
+                                console.error(jqXHR.responseText);
+                            }
+                        });
+                    }
+                }
+                } else {
+                    alert("Enter Id and Sem");
+                }
+            }
+
+            function upload() {
+                var id = document.getElementById('id').value;
+                var sem = document.getElementById('sem').value;
+                var marks = {
+                    sub1: document.getElementById('sub1').value,
+                    sub2: document.getElementById('sub2').value,
+                    sub3: document.getElementById('sub3').value,
+                    sub4: document.getElementById('sub4').value,
+                    sub5: document.getElementById('sub5').value,
+                    sub6: document.getElementById('sub6').value,
+                    sub7: document.getElementById('sub7').value,
+                    sub8: document.getElementById('sub8').value,
+                    sub9: document.getElementById('sub9').value,
+                    cgpa: document.getElementById('cgpa').value
+                };
+
+                $.ajax({
+                    url: 'update_marks.php',
+                    type: 'POST',
+                    data: {
+                        student_id: id,
+                        semester: sem,
+                        marks: JSON.stringify(marks) // JSON stringified marks
+                    },
+                    success: function(response) {
+                    if (response.error) {
+                        alert(response.error);
+                        console.error(response.error);
+                    } else {
+                        alert(response.success);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error uploading data. Check console for details.');
+                    console.error('AJAX error:', textStatus, errorThrown);
+                    console.error(jqXHR.responseText);
+                }
+            });
+        }
+
+        </script>
+</body>
+</html>

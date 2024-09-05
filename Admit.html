@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSMPS</title>
+    <link rel="stylesheet" href="styles1.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #details {
+            width: 1000px;
+            height: 100vh;
+            margin-left: 20px;
+            padding: 30px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <select name="sem" id="sem" style="margin:20px;width:100px;border-radius: 10px;">
+            <option value="">Select</option>
+            <option value="Mid">Mid</option>
+            <option value="End">End</option>
+        </select>
+        <button onclick="getData()"><b>Submit</b></button>
+        <button id="download" onclick="download()" style="margin-left:20px;display: none;"><b>Download</b></button>
+    </div>
+
+    <div id="details">
+        <h1 id="admit">Admit Card</h1><br>
+        <p id="name" value="">Name:</p>
+        <p id="sec" value="">Section:</p>
+        <p id="crno" value="">Class Roll No:</p>
+        <p id="course" value="">Course:</p>
+        <p id="branch" value="">Branch:</p>
+        <p id="semValue" value="">Semester: </p>
+        <p id="enrollno" value="">Enrollment No:</p>
+        <p id="urno" value="">University Roll No:</p><br>
+        <h2>Eligible in</h2><br>
+        <p id="sub1"></p>
+        <p id="sub2"></p>
+        <p id="sub3"></p>
+        <p id="sub4"></p>
+        <p id="sub5"></p>
+        <p id="sub6"></p>
+        <p id="sub7"></p>
+        <p id="sub8"></p>
+        <p id="sub9"></p>
+    </div>
+
+    <script>
+        var myobj;
+        var count=0;
+
+        function getQueryParams() {
+            var queryString = window.location.search;
+            var params = {};
+            var queryArray = queryString.substring(1).split('&');
+            for (var i = 0; i < queryArray.length; i++) {
+                var pair = queryArray[i].split('=');
+                params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            }
+            return params;
+        }
+        var queryParams = getQueryParams();
+        var id = queryParams['id'];
+        function getData() {
+            ++count;
+            if(count>1)
+            {
+                    document.getElementById('admit').innerText = "Admit Card";
+                    document.getElementById('name').innerText = "Name:";
+                    document.getElementById('sec').innerText = "Section:";
+                    document.getElementById('crno').innerText = "Class Roll No:";
+                    document.getElementById('course').innerText = "Course:";
+                    document.getElementById('branch').innerText = "Branch:";
+                    document.getElementById('semValue').innerText = "Semester:";
+                    document.getElementById('enrollno').innerText = "Enrollment No:";
+                    document.getElementById('urno').innerText = "University Roll No:";
+            }
+            let type = document.getElementById('sem').value;
+            type = " " + type + " term";
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myobj = JSON.parse(this.responseText);
+
+                    document.getElementById('admit').innerText += type;
+                    document.getElementById('details').style.display = 'block';
+                    document.getElementById('download').style.display = 'inline-block';
+                    document.getElementById('name').innerText += myobj.name;
+                    document.getElementById('sec').innerText += myobj.section;
+                    document.getElementById('crno').innerText += myobj.crno;
+                    document.getElementById('course').innerText += myobj.course;
+                    document.getElementById('branch').innerText += myobj.branch;
+                    document.getElementById('semValue').innerText += myobj.sem;
+                    document.getElementById('enrollno').innerText += myobj.enrollno;
+                    document.getElementById('urno').innerText += myobj.urno;
+
+                    
+
+                    if (parseInt(myobj.sem) == 6) {
+                        document.getElementById('sub1').innerText = 'Compiler Design TCS-601';
+                        document.getElementById('sub2').innerText = 'Software Engineering TCS-611';
+                        document.getElementById('sub3').innerText = 'Computer Networks TCS-604';
+                        document.getElementById('sub4').innerText = 'Full Stack Web Development TCS-693';
+                        document.getElementById('sub5').innerText = 'Career Skills XCS-601';
+                        document.getElementById('sub6').innerText = 'Elective';
+                        document.getElementById('sub7').innerText = 'Compiler Design Lab PCS-601';
+                        document.getElementById('sub8').innerText = 'Software Engineering Lab PC-611';
+                        document.getElementById('sub9').innerText = 'Full Stack Web Development Lab PCS-693';
+                    }
+                }
+            };
+            xhttp.open("POST", "getAdmit.php");
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            var params = "id=" + encodeURIComponent(id) + "&type=" + encodeURIComponent(type);
+
+            xhttp.send(params);
+        }
+
+        function download() {
+            if (!myobj) {
+                console.error("Data not available yet");
+                return;
+            }
+
+            let type = document.getElementById('sem').value;
+            type = " " + type + " term";
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFont("helvetica", "bold");
+            doc.text("Admit Card" + type, 80, 10);
+            doc.text('Name: '+myobj.name,10,20);
+            doc.text('Section: '+myobj.section,10,30);
+            doc.text('Class Roll No: '+myobj.crno,10,40);
+            doc.text('Course: '+myobj.course,10,50);
+            doc.text('Branch: '+myobj.branch,10,60);
+            doc.text('Semester: '+myobj.sem,10,70);
+            doc.text('Enrollment No: '+myobj.enrollno,10,80);
+            doc.text('University Roll No: '+myobj.urno,10,90);
+            doc.text("Eligible in",80,100);
+            doc.text('Compiler Design TCS-601',10,110);
+            doc.text('Software Engineering TCS-611',10,120);
+            doc.text('Computer Networks TCS-604',10,130);
+            doc.text('Full Stack Web Development TCS-693',10,140);
+            doc.text('Career Skills XCS-601',10,150);
+            doc.text('Elective',10,160);
+            doc.text('Compiler Design Lab PCS-601',10,170);
+            doc.text('Software Engineering Lab PC-611',10,180);
+            doc.text('Full Stack Web Development Lab PCS-693',10,190);
+
+            doc.save("AdmitCard.pdf");
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+body {
+    background-image: url('Graphic1.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    margin: 0; 
+    padding: 0;
+    color: black;
+    font-weight: bold;
+}
+
+#welcome{
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+#options {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    color: white;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+.nav{
+    text-align: left;
+    background-color: white;
+    margin-top: 40px;
+    height: 30px;
+    padding: 15px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.nav a {
+    font-size:20px;
+    margin-left: 10px;
+    color: blue;
+}
+.nav a:hover {
+    font-size:20px;
+    margin-right: 20px;
+    color: green;
+}
+
+.container{
+    width: 350px;
+    height: 300px;
+    border: 2px solid black;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    padding-top: 50px;
+}
+
+input{
+    width: 150px;
+    height: 25px;
+    border-radius: 10px;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+label{
+    color: black;
+    height: 20px;
+    font-size: 18px;
+    margin: 20px;
+}
+
+button{
+    width: 150px;
+    height: 40px;
+    background-color: blue;
+    color: white;
+    margin-left: 100px;
+    margin-top: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+.popupContent {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    text-align: center; 
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#options {
+    display: none;
+}
